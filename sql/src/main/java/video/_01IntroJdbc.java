@@ -20,7 +20,7 @@ public class _01IntroJdbc {
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(ALL_USERS_QUERY);) {
+             ResultSet resultSet = statement.executeQuery(ALL_USERS_QUERY)) {
 
             while (resultSet.next()) {
                 String name = resultSet.getString("name");

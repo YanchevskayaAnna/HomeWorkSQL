@@ -18,6 +18,15 @@ public class Subject {
         return id;
     }
 
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public void setId(int id) {
         this.id = id;
     }

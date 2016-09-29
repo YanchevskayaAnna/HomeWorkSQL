@@ -8,6 +8,14 @@ public class Learning {
     private int groupID;
     private int subjectID;
 
+    @Override
+    public String toString() {
+        return "Learning{" +
+                "groupID=" + groupID +
+                ", subjectID=" + subjectID +
+                '}';
+    }
+
     public Learning(int subjectID) {
         this.groupID = -1;
         this.subjectID = subjectID;

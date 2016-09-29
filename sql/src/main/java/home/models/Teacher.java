@@ -11,6 +11,17 @@ public class Teacher {
     private double exp;
     private int subjectId;
 
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", exp=" + exp +
+                ", subjectId=" + subjectId +
+                '}';
+    }
+
     public Teacher(String name, String lastName, double exp, int subjectId) {
         this.firstName = name;
         this.lastName = lastName;

@@ -13,6 +13,7 @@ public class Student {
     public Student(String name, String lastName) {
         this.firsName = name;
         this.lastName = lastName;
+
         this.groupID = -1;
     }
 
@@ -32,11 +33,29 @@ public class Student {
         this.firsName = firsName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public int getGroupID() {
         return groupID;
     }
 
     public void setGroupID(int groupID) {
         this.groupID = groupID;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", firsName='" + firsName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", groupID=" + groupID +
+                '}';
     }
 }
