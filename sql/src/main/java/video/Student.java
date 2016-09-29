@@ -1,3 +1,5 @@
+package video;
+
 import java.util.Date;
 
 /**
@@ -51,7 +53,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "video.Student{" +
                 "name='" + name + '\'' +
                 ", mail='" + mail + '\'' +
                 ", salary=" + salary +
