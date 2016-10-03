@@ -1,7 +1,7 @@
-package home.models;
+package dao.model;
 
 /**
- * Created by sf on 29.09.16.
+ * Created by sf on 03.10.16.
  */
 public class Subject {
 
@@ -9,22 +9,11 @@ public class Subject {
     private String name;
     private String description;
 
-    public Subject(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public Subject() {
     }
 
     public int getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return "Subject{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 
     public void setId(int id) {

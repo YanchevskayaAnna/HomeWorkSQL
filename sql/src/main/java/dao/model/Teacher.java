@@ -1,7 +1,7 @@
-package home.models;
+package dao.model;
 
 /**
- * Created by sf on 29.09.16.
+ * Created by sf on 03.10.16.
  */
 public class Teacher {
 
@@ -11,22 +11,7 @@ public class Teacher {
     private double exp;
     private int subjectId;
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", exp=" + exp +
-                ", subjectId=" + subjectId +
-                '}';
-    }
-
-    public Teacher(String name, String lastName, double exp, int subjectId) {
-        this.firstName = name;
-        this.lastName = lastName;
-        this.exp = exp;
-        this.subjectId = subjectId;
+    public Teacher() {
     }
 
     public int getId() {
@@ -43,6 +28,14 @@ public class Teacher {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public double getExp() {
