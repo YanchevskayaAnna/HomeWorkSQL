@@ -99,4 +99,46 @@ public class TestTeacherController {
         teacherController.delete(connection, "teachers", teachers.get(teachers.size() - 1).getId());
     }
 
+    @Test
+    public void getTeacherWithMinExp(){
+        Teacher teacher = teacherController.getTeacherWithMinExp();
+        List<Teacher> teachersList = teacherController.getAll();
+        boolean res = true;
+        for (Teacher teacherIter : teachersList) {
+            if(teacherIter.getExp()<teacher.getExp()) {
+                res = false;
+                break;
+            }
+        }
+        Assert.assertTrue(res);
+    }
+
+    @Test
+    public void getTeacherWithMaxExp(){
+        Teacher teacher = teacherController.getTeacherWithMaxExp();
+        List<Teacher> teachersList = teacherController.getAll();
+        boolean res = true;
+        for (Teacher teacherIter : teachersList) {
+            if(teacherIter.getExp()>teacher.getExp()) {
+                res = false;
+                break;
+            }
+        }
+        Assert.assertTrue(res);
+    }
+
+    @Test
+    public void getTeachersWithExp(){
+        double exp = 10;
+        List<Teacher> teacherList = teacherController.getTeachersWithExp(exp);
+        boolean res = true;
+        for (Teacher teacher : teacherList) {
+            if(teacher.getExp()<exp) {
+                res = false;
+                break;
+            }
+        }
+        Assert.assertTrue(res);
+    }
+
 }

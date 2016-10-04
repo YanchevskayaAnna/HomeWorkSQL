@@ -1,5 +1,6 @@
 import dao.controller.GroupController;
 import dao.model.Group;
+import dao.model.Subject;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -90,5 +91,13 @@ public class TestGroupController {
         Assert.assertTrue(groupController.create(group));
         List<Group> groupList = groupController.getAll();
         groupController.delete(connection, "groups", groupList.get(groupList.size() - 1).getId());
+    }
+
+    @Test
+    public void getAllGroupsFromResultSet() throws SQLException {
+        Subject subject = new Subject();
+        subject.setName("Math");
+        List<Group> groupList = groupController.getAllGroupsWithSubject(subject);
+        Assert.assertNotNull(groupList);
     }
 }

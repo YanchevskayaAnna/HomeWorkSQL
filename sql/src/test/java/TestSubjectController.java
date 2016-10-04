@@ -95,4 +95,17 @@ public class TestSubjectController {
         List<Subject> subjects = subjectController.getAll();
         subjectController.delete(connection, "subjects", subjects.get(subjects.size() - 1).getId());
     }
+
+    @Test
+    public void getHumSubs(){
+        List<Subject> subjectList = subjectController.getHumSubjects();
+        boolean res = true;
+        for (Subject subject : subjectList) {
+            if(!subject.getDescription().equals("Hum")) {
+                res = false;
+                break;
+            }
+        }
+        Assert.assertTrue(res);
+    }
 }

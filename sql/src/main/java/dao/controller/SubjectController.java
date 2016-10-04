@@ -21,17 +21,10 @@ public class SubjectController implements MyAbstractController<Subject, Integer>
     @Override
     public List<Subject> getAll() {
 
-        List<Subject> subjects = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM subjects;");) {
 
-            while (resultSet.next()) {
-                Subject subject = new Subject();
-                subject.setId(resultSet.getInt("id"));
-                subject.setName(resultSet.getString("title"));
-                subject.setDescription(resultSet.getString("description"));
-                subjects.add(subject);
-            }
+            List<Subject> subjects = getFromResultSet(resultSet);
             return subjects;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -84,7 +77,7 @@ public class SubjectController implements MyAbstractController<Subject, Integer>
     public boolean create(Subject entity) {
         String sqlQuery = "INSERT INTO subjects(title, description) VALUES (?,?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setString(2, entity.getDescription());
             preparedStatement.execute();
@@ -93,6 +86,30 @@ public class SubjectController implements MyAbstractController<Subject, Integer>
             return false;
         }
         return true;
+    }
+
+    public List<Subject> getHumSubjects() {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM subjects WHERE description='HUM';")) {
+            List<Subject> subjects = getFromResultSet(resultSet);
+            return subjects;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private List<Subject> getFromResultSet(ResultSet resultSet) throws SQLException {
+        List<Subject> subjectList = new ArrayList<>();
+        while (resultSet.next()) {
+            Subject subject = new Subject();
+            subject.setId(resultSet.getInt("id"));
+            subject.setName(resultSet.getString("title"));
+            subject.setDescription(resultSet.getString("description"));
+            subjectList.add(subject);
+        }
+
+        return subjectList;
     }
 
 }

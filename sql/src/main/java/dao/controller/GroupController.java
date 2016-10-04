@@ -2,6 +2,7 @@ package dao.controller;
 
 import dao.MyAbstractController;
 import dao.model.Group;
+import dao.model.Subject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,16 +21,11 @@ public class GroupController implements MyAbstractController<Group, Integer> {
 
     @Override
     public List<Group> getAll() {
-        List<Group> groupList = new ArrayList<>();
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM groups;");) {
 
-            while (resultSet.next()) {
-                Group group = new Group();
-                group.setId(resultSet.getInt("id"));
-                group.setName(resultSet.getString("name"));
-                groupList.add(group);
-            }
+            List<Group> groupList = getAllGroupsFromResultSet(resultSet);
+
             return groupList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,6 +85,35 @@ public class GroupController implements MyAbstractController<Group, Integer> {
             return false;
         }
         return true;
+    }
+
+    public List<Group> getAllGroupsFromResultSet(ResultSet resultSet) throws SQLException {
+
+        List<Group> groupList = new ArrayList<>();
+        while (resultSet.next()) {
+            Group group = new Group();
+            group.setId(resultSet.getInt("id"));
+            group.setName(resultSet.getString("name"));
+            groupList.add(group);
+        }
+        return groupList;
+    }
+
+    public List<Group> getAllGroupsWithSubject(Subject subject) throws SQLException {
+
+        String sqlQuery = "SELECT group_id id, groups.name, subject_id, subjects.title FROM learning LEFT JOIN subjects " +
+                "ON learning.subject_id=subjects.id RIGHT JOIN groups ON groups.id=learning.group_id where title='" +
+                subject.getName() + "';";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlQuery);) {
+
+            List<Group> groupList = getAllGroupsFromResultSet(resultSet);
+
+            return groupList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

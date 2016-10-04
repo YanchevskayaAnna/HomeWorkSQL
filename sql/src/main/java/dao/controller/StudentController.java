@@ -21,23 +21,7 @@ public class StudentController implements MyAbstractController<Student, Integer>
     @Override
     public List<Student> getAll() {
 
-        List<Student> students = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT * FROM students;");) {
-
-            while (resultSet.next()) {
-                Student student = new Student();
-                student.setFirstName(resultSet.getString("first_name"));
-                student.setLastName(resultSet.getString("last_name"));
-                student.setId(resultSet.getInt("id"));
-                student.setGroupID(resultSet.getInt("group_id"));
-                students.add(student);
-            }
-            return students;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return getAllStudentsWithCondition(null);
     }
 
     @Override
@@ -46,7 +30,7 @@ public class StudentController implements MyAbstractController<Student, Integer>
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM students WHERE id=" + id + ";")) {
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 student.setFirstName(resultSet.getString("first_name"));
                 student.setLastName(resultSet.getString("last_name"));
                 student.setId(resultSet.getInt("id"));
@@ -65,11 +49,11 @@ public class StudentController implements MyAbstractController<Student, Integer>
 
         String sqlQuery = "UPDATE students SET first_name=?, last_name=?, group_id=? WHERE id=?";
 
-        if(getEntityById(entity.getId())==null) {
+        if (getEntityById(entity.getId()) == null) {
             return false;
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
 
             preparedStatement.setString(1, entity.getFirstName());
             preparedStatement.setString(2, entity.getLastName());
@@ -91,7 +75,7 @@ public class StudentController implements MyAbstractController<Student, Integer>
     public boolean create(Student entity) {
         String sqlQuery = "INSERT INTO students(first_name, last_name, group_id) VALUES (?,?,?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)) {
             preparedStatement.setString(1, entity.getFirstName());
             preparedStatement.setString(2, entity.getLastName());
             preparedStatement.setInt(3, entity.getGroupID());
@@ -102,5 +86,34 @@ public class StudentController implements MyAbstractController<Student, Integer>
         }
         return true;
     }
+
+    public List<Student> getAllStudentsWithCondition(String condition) {
+
+        List<Student> students = new ArrayList<>();
+        String sqlQuery = "SELECT * FROM students";
+        if (condition != null) {
+            sqlQuery += " WHERE " + condition + ";";
+        } else {
+            sqlQuery+=";";
+        }
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sqlQuery)) {
+
+            while (resultSet.next()) {
+                Student student = new Student();
+                student.setFirstName(resultSet.getString("first_name"));
+                student.setLastName(resultSet.getString("last_name"));
+                student.setId(resultSet.getInt("id"));
+                student.setGroupID(resultSet.getInt("group_id"));
+                students.add(student);
+            }
+
+            return students;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 }

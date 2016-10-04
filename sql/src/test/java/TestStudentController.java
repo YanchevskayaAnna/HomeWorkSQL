@@ -97,4 +97,15 @@ public class TestStudentController {
         List<Student> students = studentController.getAll();
         studentController.delete(connection, "students", students.get(students.size() - 1).getId());
     }
+
+    @Test
+    public void getAllStudentsWithCondition() {
+        int groupID = 2;
+        List<Student> students = studentController.getAllStudentsWithCondition("group_id=" + groupID);
+        boolean res = true;
+        for (Student student : students) {
+            res = res & student.getGroupID() == groupID;
+        }
+        Assert.assertTrue(res);
+    }
 }
