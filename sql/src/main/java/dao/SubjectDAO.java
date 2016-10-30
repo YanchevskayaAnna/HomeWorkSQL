@@ -1,6 +1,6 @@
 package dao;
 
-import dao.model.Subject;
+import model.Subject;
 
 public interface SubjectDAO extends AbstractDAO<Subject> {
 }

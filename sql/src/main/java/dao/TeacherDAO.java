@@ -1,6 +1,6 @@
 package dao;
 
-import dao.model.Teacher;
+import model.Teacher;
 
 public interface TeacherDAO extends AbstractDAO<Teacher> {
 }

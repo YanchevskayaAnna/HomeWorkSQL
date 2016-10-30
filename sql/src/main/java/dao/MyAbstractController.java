@@ -16,7 +16,7 @@ public interface MyAbstractController <E,K> {
     boolean create(E entity);
 
     default boolean delete(Connection connection, String tableName, int id){
-        String sqlQuery = "DELETE FROM " + tableName + " WHERE id=?";
+        String sqlQuery = "DELETE FROM " + tableName + " WHERE " + tableName.substring(0, tableName.length()-1) + "_id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery)){
             preparedStatement.setInt(1, id);
